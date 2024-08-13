@@ -1,0 +1,74 @@
+@model Users
+<div class="container-xxl flex-grow-1 container-p-y">
+  <div class="col-xxl">
+      @if (ViewBag.Error != null)
+      {
+          <div class="alert alert-solid-danger alert-dismissible d-flex align-items-center" role="alert">
+              @ViewBag.Error
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      }
+      @* table show list category and delete and edit *@
+      <div class="card mb-4 ">
+          <div class="card-header d-flex align-items-center justify-content-between">
+              <h5 class="mb-0">لیست دسته بندی ها</h5>
+              <small class="text-muted float-end primary-font"> <a href="/Admin/Home/Register" class="btn btn-label-dark">اضافه کردن کاربر</a></small>
+          </div>
+          <div class="card-body">
+              <table class="table table-hover table-responsive">
+                  <thead>
+                      <tr>
+                          <th scope="col">ردیف</th>
+                          <th scope="col">عکس پروفایل</th>
+                          <th scope="col">نام و نام خانوادگی</th>
+                          <th scope="col">کد ملی</th>
+                          <th scope="col">کد پرسنلی</th>
+                          <th scope="col">نام کاربری</th>
+                          <th scope="col">تلفن</th>
+                          <th scope="col">عملیات</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                      </tr>
+                      @if (ViewBag.Users != null)
+                      {
+                          int i = 1;
+                          foreach (var item in ViewBag.Users)
+                          {
+                              <tr>
+                                  <th scope="row">@i</th>
+                                  <td class="list-unstyled users-list m-0 avatar-group align-items-center">
+                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
+                                    class="avatar avatar-xs pull-up" title="@item.FirstName @item.LastName">
+                                    <img src="@item.Profile" alt="آواتار" class="rounded-circle">
+                                    </li>
+                                </td>
+                                <td>
+                                    @item.FirstName @item.LastName
+                                </td>
+                                  <td>@item.PerconalCode</td>
+                                  <td>@item.NatinalCode</td>
+                                  <td>@item.Username</td>
+                                  <td>@item.Phone</td>
+                                  <td>
+                                      <a href="/Admin/Home/UserSetting/@item.Id" class="btn btn-primary">ویرایش</a>
+                                      <a href="/Admin/Home/DeleteCat/@item.Id" class="btn btn-danger" onclick="return confirm('آیا از غیر فعال کردن کاربر مطمئن هستید ؟')">فعال/غیرفعال</a>
+                                  </td>
+                              </tr>
+                              i++;
+                          }
+                      }
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>

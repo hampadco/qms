@@ -1,0 +1,122 @@
+@model Category
+<div class="container-xxl flex-grow-1 container-p-y">
+  <div class="col-xxl">
+      @if (ViewBag.Error != null)
+      {
+          <div class="alert alert-solid-danger alert-dismissible d-flex align-items-center" role="alert">
+              @ViewBag.Error
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      }
+      <div class="card mb-4">
+          <div class="card-header d-flex align-items-center justify-content-between">
+              <h5 class="mb-0">دسته بندی جدید</h5>
+              <small class="text-muted float-end primary-font">دسته بندی</small>
+          </div>
+          <div class="card-body">
+              <form action="/Admin/Home/AddCat" id="form" method="post">
+                  <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label" for="basic-default-company">نام دسته</label>
+                      <div class="col-sm-10">
+                          <input required type="text" class="form-control" id="basic-default-company"
+                              placeholder="کد دسته را وارد کنید" asp-for="CatName">
+                      </div>
+                  </div>
+                  <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label" for="basic-default-company2">کد دسته</label>
+                      <div class="col-sm-10">
+                          <input required type="text" class="form-control" id="basic-default-company2"
+                              placeholder="کد دسته را وارد کنید" asp-for="CatCode">
+                      </div>
+                  </div>
+                    <input type="hidden" asp-for="Id">
+
+
+                  <div class="row md-3">
+                      <label for="Parent" class="col-sm-2 col-form-label">نام دسته والد</label>
+                      <div class="col-sm-10">
+                          <select id="Parent" class="select2 form-select" asp-for="ParentId">
+                              <option value="">-دسته اصلی</option>
+                              @if(ViewBag.Cats != null)
+                              {
+                                  @foreach (var item in ViewBag.Cats)
+                                  {
+                                    
+                                      <option value="@item.Id">@item.CatName</option>
+                                  }
+                              }
+                          </select>
+                      </div>
+                  </div>
+                  <br>
+                  <div class="row justify-content-end">
+                      <div class="col-sm-10">
+                          <button type="submit" class="btn btn-primary">ذخیره</button>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+
+      @* table show list category and delete and edit *@
+      <div class="card mb-4 ">
+          <div class="card-header d-flex align-items-center justify-content-between">
+              <h5 class="mb-0">لیست دسته بندی ها</h5>
+              <small class="text-muted float-end primary-font">لیست دسته بندی ها</small>
+          </div>
+          <div class="card-body">
+              <table class="table table-hover table-responsive">
+                  <thead>
+                      <tr>
+                          <th scope="col">ردیف</th>
+                          <th scope="col">نام دسته</th>
+                          <th scope="col">نام دسته والد</th>
+                          <th scope="col">کد دسته</th>
+                          <th scope="col">عملیات</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      @if (ViewBag.Cats != null)
+                      {
+                          int i = 1;
+                          foreach (var item in ViewBag.Cats)
+                          {
+                              <tr>
+                                  <th scope="row">@i</th>
+                                  <td>@item.CatName</td>
+                                  <td>
+                                  @{int check = 0;}
+
+
+                                  @foreach(var item2 in ViewBag.Cats)
+                                  {
+                                      if(item2.Id == item.ParentId)
+                                      {
+                                          @item2.CatName;
+                                          check++;
+                                          break;
+                                         
+                                      }
+                                      
+                                  }
+                                  
+                                  @if(check == 0){
+                                    <span>دسته اصلی</span>
+                                  }
+                                  
+                                  </td>
+                                  <td>@item.CatCode</td>
+                                  <td>
+                                      <a href="/Admin/Home/AddCat/@item.Id" class="btn btn-primary">ویرایش</a>
+                                      <a href="/Admin/Home/DeleteCat/@item.Id" class="btn btn-danger" onclick="return confirm('آیا از حذف مطمئن هستید ؟')">حذف</a>
+                                  </td>
+                              </tr>
+                              i++;
+                          }
+                      }
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>

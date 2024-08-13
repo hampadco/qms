@@ -1,0 +1,86 @@
+@model Users
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 breadcrumb-wrapper mb-4">
+        <span class="text-muted fw-light">تنظیمات حساب /</span> حساب
+    </h4>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <h5 class="card-header heading-color">جزئیات حساب کاربری</h5>
+                @if (ViewBag.error != null)
+            {
+              <div class="alert alert-solid-danger alert-dismissible d-flex align-items-center" role="alert">
+                <i class="bx bx-xs bx-store me-2"></i>
+                @ViewBag.error
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            }
+            @if (ViewBag.Result != null)
+            {
+              <div class="alert alert-solid-success" role="alert">
+                @ViewBag.Result
+              </div>
+            }
+                <!-- Account -->
+                <hr class="my-0">
+                <div class="card-body">
+                    <form onsum="/Admin/home/UserSetting" method="POST" enctype="multipart/form-data">
+                    <div class="d-flex align-items-start align-items-sm-center gap-4">
+                        <img src="@ViewBag.User.Profile" alt="user-avatar" class="d-block rounded" height="100"
+                             width="100" id="uploadedAvatar">
+                        <div class="button-wrapper">
+                            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                <span class="d-none d-sm-block">ارسال تصویر جدید</span>
+                                <i class="bx bx-upload d-block d-sm-none"></i>
+                                <input type="file" id="upload" class="account-file-input" hidden
+                                       accept="image/png, image/jpeg ,image/GIF" name="Profile">
+                            </label>
+
+
+                            <span class="mb-0">فایل‌های JPG، GIF یا PNG مجاز هستند. حداکثر اندازه فایل 800KB.</span>
+                        </div>
+                        <hr class="my-0">
+
+                    </div>
+                        <div class="row">
+                        <input type="hidden" name="Id" value="@ViewBag.User.Id">
+                            <div class="mb-3 col-md-6">
+                                <label for="FirstName" class="form-label">نام</label>
+                                <input class="form-control" type="text" name="FirstName" value="@ViewBag.User.FirstName" autofocus>
+                                       
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="lastName" class="form-label">نام خانوادگی</label>
+                                <input class="form-control" type="text" name="LastName" value="@ViewBag.User.LastName" >
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label" for="Phone">شماره تلفن</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="text" id="Phone" name="Phone" value="@ViewBag.User.Phone"
+                                           class="form-control text-start" placeholder="شماره تماس">
+                                </div>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="Addres" class="form-label">آدرس</label>
+                                <input type="text" class="form-control" id="Addres" name="Addres" placeholder="آدرس" value="@ViewBag.User.Addres">
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="NatinalCode" class="form-label">کد ملی</label>
+                                <input class="form-control" type="text" name="NatinalCode" id="NatinalCode" value="@ViewBag.User.NatinalCode">
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="PerconalCode" class="form-label">کد پرسنلی</label>
+                                <input class="form-control" type="text" name="PerconalCode" id="PerconalCode" value="@ViewBag.User.PerconalCode">
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <button type="submit" class="btn btn-primary me-2">ذخیره تغییرات</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
